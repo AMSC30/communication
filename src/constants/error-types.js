@@ -23,9 +23,17 @@ const WRONG_PASSWORD = {
 		}
 	}
 }
-
+const NO_AUTH = {
+	message: 'NOT AUTH',
+	handler(ctx) {
+		ctx.body = {
+			message: '未认证请求'
+		}
+	}
+}
 module.exports = {
 	NO_ACCOUNT_OR_PASSWORD,
 	NO_USER,
-	WRONG_PASSWORD
+	WRONG_PASSWORD,
+	NO_AUTH
 }

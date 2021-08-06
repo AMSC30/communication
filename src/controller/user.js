@@ -8,8 +8,8 @@ exports.login = async (ctx, next) => {
 		const { account, password } = ctx.request.body
 
 		const token = jwt.sign({ account, password }, config.privateKey, {
-			algorithm: 'RS256',
-			expiresIn: '1h'
+			algorithm: config.tokenAlgorithm,
+			expiresIn: config.tokenExpiresTime
 		})
 
 		ctx.body = { token }
@@ -21,7 +21,7 @@ exports.login = async (ctx, next) => {
 }
 exports.addUser = async (ctx, next) => {
 	const { account, password, name, age } = ctx.request.body
-	const result = await isExist(account)
+	const result = await isExist(account, ctx)
 	if (result.length) {
 		ctx.body = {
 			message: '该用户已存在'
@@ -29,7 +29,7 @@ exports.addUser = async (ctx, next) => {
 		return
 	}
 
-	await addUser(account, password, name, age)
+	await addUser(account, password, name, age, ctx)
 
 	ctx.body = {
 		message: '成功'
@@ -39,7 +39,7 @@ exports.addUser = async (ctx, next) => {
 exports.getUserInfo = async (ctx, next) => {
 	const { id } = ctx.request.query
 
-	const result = await getUserInfo(id)
+	const result = await getUserInfo(id, ctx)
 
 	if (result.length) {
 		ctx.body = result[0]

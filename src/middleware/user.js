@@ -11,7 +11,7 @@ exports.verifyUser = async (ctx, next) => {
 		return ctx.app.emit('error', error, ctx)
 	}
 	// 校验用户是否存在
-	const accountResult = await userService.isExist(account)
+	const accountResult = await userService.isExist(account, ctx)
 	if (accountResult.length === 0) {
 		const error = new Error(errorType.NO_USER.message)
 		return ctx.app.emit('error', error, ctx)
@@ -20,7 +20,7 @@ exports.verifyUser = async (ctx, next) => {
 	// 登录
 	password = md5Password(password)
 
-	const loginResult = await userService.login(account, password)
+	const loginResult = await userService.login(account, password, ctx)
 	if (loginResult.length === 0) {
 		const error = new Error(errorType.WRONG_PASSWORD.message)
 		return ctx.app.emit('error', error, ctx)

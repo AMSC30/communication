@@ -1,4 +1,4 @@
-const router = new require('koa-router')()
+const router = new require('koa-router')({ prefix: '/user' })
 const { login, addUser, getUserInfo } = require('../controller/user')
 const { verifyUser, handlePassword } = require('../middleware/user')
 

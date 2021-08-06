@@ -6,6 +6,12 @@ const getKey = filePath => {
 }
 
 module.exports = {
+	// 私钥
 	privateKey: getKey('../constants/private.key'),
-	publicKey: getKey('../constants/public.key')
+	// 公钥
+	publicKey: getKey('../constants/public.key'),
+	// token过期时间
+	tokenExpiresTime: '1h',
+	//token加密方式
+	tokenAlgorithm: 'RS256'
 }
