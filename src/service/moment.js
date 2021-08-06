@@ -28,7 +28,6 @@ class Moment {
 		return result
 	}
 	async deleteSingle(id, ctx) {
-		console.log(aaa)
 		const statement = `DELETE FROM moment WHERE id = ?`
 		const [result] = await ctx.connection.execute(statement, [id])
 		return result
