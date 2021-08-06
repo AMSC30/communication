@@ -13,8 +13,8 @@ module.exports = async (ctx, next) => {
 			const user = jwt.verify(token, config.publicKey, {
 				algorithms: config.tokenAlgorithm
 			})
-			ctx.user = user
 
+			ctx.user = user
 			await next()
 		} catch (error) {
 			const errorInfo = new Error(errorTypes.NO_AUTH.message)

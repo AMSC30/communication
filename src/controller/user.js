@@ -5,14 +5,13 @@ const config = require('../app/config')
 
 exports.login = async (ctx, next) => {
 	try {
-		const { account, password } = ctx.request.body
-
-		const token = jwt.sign({ account, password }, config.privateKey, {
+		// 下发token
+		const token = jwt.sign(ctx.request.body, config.privateKey, {
 			algorithm: config.tokenAlgorithm,
 			expiresIn: config.tokenExpiresTime
 		})
 
-		ctx.body = { token }
+		ctx.body = { token, ...ctx.request.body }
 	} catch (error) {
 		console.log(error)
 	}

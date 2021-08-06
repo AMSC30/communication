@@ -12,6 +12,7 @@ exports.verifyUser = async (ctx, next) => {
 	}
 	// 校验用户是否存在
 	const accountResult = await userService.isExist(account, ctx)
+
 	if (accountResult.length === 0) {
 		const error = new Error(errorType.NO_USER.message)
 		return ctx.app.emit('error', error, ctx)
@@ -23,10 +24,14 @@ exports.verifyUser = async (ctx, next) => {
 	const loginResult = await userService.login(account, password, ctx)
 	if (loginResult.length === 0) {
 		const error = new Error(errorType.WRONG_PASSWORD.message)
+
+		ctx.request.body = null
+
 		return ctx.app.emit('error', error, ctx)
 	}
-
-	ctx.request.body.password = password
+	ctx.request.body = {
+		...accountResult[0]
+	}
 
 	await next()
 }

@@ -1,8 +1,8 @@
 class USER {
 	async isExist(account, ctx) {
 		const statement = `SELECT * FROM user WHERE account = ?`
-		const result = await ctx.connection.execute(statement, [account])
-		return result[0]
+		const [result] = await ctx.connection.execute(statement, [account])
+		return result
 	}
 
 	async login(account, password, ctx) {
