@@ -31,9 +31,18 @@ const NO_AUTH = {
 		}
 	}
 }
+const NO_AUTH_TO_UPDATE_MOMENT = {
+	message: 'NOT AUTH TO UPDATE MOMENT',
+	handler(ctx) {
+		ctx.body = {
+			message: '您没有权限修改他人文章'
+		}
+	}
+}
 module.exports = {
 	NO_ACCOUNT_OR_PASSWORD,
 	NO_USER,
 	WRONG_PASSWORD,
-	NO_AUTH
+	NO_AUTH,
+	NO_AUTH_TO_UPDATE_MOMENT
 }
