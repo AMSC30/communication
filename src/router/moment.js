@@ -1,5 +1,5 @@
 const router = new require('koa-router')({ prefix: '/moment' })
-
+const { verifyAuth } = require('../middleware/user')
 const {
 	createMoment,
 	queryMoment,
@@ -14,8 +14,8 @@ router.get('/:id', queryMoment)
 
 router.get('/list', queryList)
 
-router.post('/delete', deleteMoment)
+router.post('/delete/:id', verifyAuth, deleteMoment)
 
-router.post('/update/:id', updateMoment)
+router.post('/update/:id', verifyAuth, updateMoment)
 
 module.exports = router

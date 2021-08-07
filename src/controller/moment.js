@@ -1,11 +1,4 @@
-const {
-	create,
-	query,
-	queryList,
-	deleteSingle,
-	queryMomentWithUserId,
-	updateMoment
-} = require('../service/moment')
+const { create, query, queryList, deleteSingle, updateMoment } = require('../service/moment')
 
 const { NO_AUTH_TO_UPDATE_MOMENT } = require('../constants/error-types.js')
 
@@ -43,16 +36,6 @@ exports.deleteMoment = async (ctx, next) => {
 }
 exports.updateMoment = async (ctx, next) => {
 	const { id: momentId } = ctx.request.params
-	const { id: userId } = ctx.user
-
-	// 验证是否有当前内容
-	const result = await queryMomentWithUserId(momentId, userId, ctx)
-
-	if (!result.length) {
-		const error = new Error(NO_AUTH_TO_UPDATE_MOMENT.message)
-		ctx.app.emit('error', error, ctx)
-		return
-	}
 
 	const { content } = ctx.request.body
 	await updateMoment(momentId, content, ctx)
