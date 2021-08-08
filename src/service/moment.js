@@ -3,6 +3,7 @@ class Moment {
 		const statement = `INSERT INTO moment (content, user_id) VALUES (?, ?);`
 		await ctx.connection.execute(statement, [content, id])
 	}
+
 	async query(id, ctx) {
 		const statement = ` SELECT m.id, m.content,m.createAt createTime,
 							m.updateAt updateTime,
@@ -17,7 +18,8 @@ class Moment {
 		return result
 	}
 
-	async queryList(limit, offset, ctx) {
+	// TODO
+	async queryList(limit, offset, label, ctx) {
 		const statement = ` SELECT m.id ,m.content,m.createAt createTime,
 							m.updateAt updateTime,
 							JSON_OBJECT('userId',u.id,'name',u.name,'age',u.age,'account',u.account) author,
@@ -30,15 +32,24 @@ class Moment {
 		const [result] = await ctx.connection.execute(statement, [limit, offset])
 		return result
 	}
+
 	async deleteSingle(id, ctx) {
 		const statement = `DELETE FROM moment WHERE id = ?`
 		const [result] = await ctx.connection.execute(statement, [id])
 		return result
 	}
+
 	async updateMoment(id, content, ctx) {
 		const statement = `UPDATE moment SET content = ? WHERE id = ?`
 		const [result] = await ctx.connection.execute(statement, [content, id])
 		return result
+	}
+
+	async addLabels(labelId, momentId, ctx) {
+		const statement = `
+							INSERT INTO moment_label (moment_id,label_id) VALUES (?,?)
+						`
+		await ctx.connection.execute(statement, [momentId, labelId])
 	}
 }
 module.exports = new Moment()

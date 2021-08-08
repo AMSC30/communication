@@ -39,10 +39,20 @@ const NO_AUTH_TO_UPDATE_MOMENT = {
 		}
 	}
 }
+
+const DUPLICATE = {
+	message: 'DUPLICATE',
+	handler(ctx) {
+		ctx.body = {
+			message: '该标签已存在'
+		}
+	}
+}
 module.exports = {
 	NO_ACCOUNT_OR_PASSWORD,
 	NO_USER,
 	WRONG_PASSWORD,
 	NO_AUTH,
-	NO_AUTH_TO_UPDATE_MOMENT
+	NO_AUTH_TO_UPDATE_MOMENT,
+	DUPLICATE
 }

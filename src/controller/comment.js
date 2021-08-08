@@ -1,4 +1,4 @@
-const { create, deleteComment, replay, getById } = require('../service/comment')
+const { create, deleteComment, replay, getById, addLabelsService } = require('../service/comment')
 
 class Comment {
 	async createComment(ctx, next) {

@@ -18,6 +18,9 @@ module.exports = (err, ctx) => {
 		case errorTypes.NO_AUTH_TO_UPDATE_MOMENT.message:
 			errorTypes.NO_AUTH_TO_UPDATE_MOMENT.handler(ctx)
 			break
+		case errorTypes.DUPLICATE.message:
+			errorTypes.DUPLICATE.handler(ctx)
+			break
 		default:
 			ctx.status = 500
 			ctx.body = 'server error'

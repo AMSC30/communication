@@ -1,7 +1,5 @@
 class Auth {
 	async queryRecord(tableName, sId, uId, ctx) {
-		console.log(tableName)
-
 		const statement = `
                             SELECT *
                             FROM ${tableName} 
