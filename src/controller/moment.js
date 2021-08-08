@@ -1,7 +1,5 @@
 const { create, query, queryList, deleteSingle, updateMoment } = require('../service/moment')
 
-const { NO_AUTH_TO_UPDATE_MOMENT } = require('../constants/error-types.js')
-
 exports.createMoment = async (ctx, next) => {
 	await create(ctx.request.body.content, ctx.user.id, ctx)
 

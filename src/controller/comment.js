@@ -1,4 +1,4 @@
-const { create, deleteComment } = require('../service/comment')
+const { create, deleteComment, replay, getById } = require('../service/comment')
 
 class Comment {
 	async createComment(ctx, next) {
@@ -24,6 +24,29 @@ class Comment {
 			message: '删除成功'
 		}
 
+		await next()
+	}
+
+	async replayComment(ctx, next) {
+		const { content, commentId, momentId } = ctx.request.body
+		const { id: userId } = ctx.user
+
+		const res = await replay(content, userId, commentId, momentId, ctx)
+
+		ctx.body = {
+			message: '回复成功',
+			result: res
+		}
+		await next()
+	}
+
+	async getCommentById(ctx, next) {
+		const { momentId } = ctx.request.query
+		const result = await getById(momentId, ctx)
+		ctx.body = {
+			result,
+			message: '查询成功'
+		}
 		await next()
 	}
 }

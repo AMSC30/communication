@@ -4,8 +4,10 @@ class Moment {
 		await ctx.connection.execute(statement, [content, id])
 	}
 	async query(id, ctx) {
-		const statement = ` SELECT m.content,m.createAt createTime, m.updateAt 		                updateTime,
-							JSON_OBJECT('userId',u.id,'name',u.name,'age',u.age,'account',u.account) author
+		const statement = ` SELECT m.id, m.content,m.createAt createTime,
+							m.updateAt updateTime,
+							JSON_OBJECT('userId',u.id,'name',u.name,'age',u.age,'account',u.account) author,
+							(SELECT COUNT(*) FROM comment c WHERE c.moment_id = m.id ) commentCount
 							from moment m 
 							LEFT JOIN user u
 							ON m.user_id = u.id
@@ -16,8 +18,10 @@ class Moment {
 	}
 
 	async queryList(limit, offset, ctx) {
-		const statement = ` SELECT m.content,m.createAt createTime, m.updateAt 		                updateTime,
-							JSON_OBJECT('userId',u.id,'name',u.name,'age',u.age,'account',u.account) author
+		const statement = ` SELECT m.id ,m.content,m.createAt createTime,
+							m.updateAt updateTime,
+							JSON_OBJECT('userId',u.id,'name',u.name,'age',u.age,'account',u.account) author,
+							(SELECT COUNT(*) FROM comment c WHERE c.moment_id = m.id ) commentCount
 							from moment m 
 							LEFT JOIN user u
 							ON m.user_id = u.id
