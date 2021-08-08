@@ -47,7 +47,6 @@ exports.verifyAuth = async (ctx, next) => {
 	tableName = resourceKey.replace('Id', '')
 
 	const { id: userId } = ctx.user
-
 	// 验证是否有当前内容
 	const result = await queryRecord(tableName, resourceId, userId, ctx)
 

@@ -27,7 +27,7 @@ const NO_AUTH = {
 	message: 'NOT AUTH',
 	handler(ctx) {
 		ctx.body = {
-			message: '未认证请求'
+			message: '请先登录'
 		}
 	}
 }
@@ -35,7 +35,7 @@ const NO_AUTH_TO_UPDATE_MOMENT = {
 	message: 'NOT AUTH TO UPDATE MOMENT',
 	handler(ctx) {
 		ctx.body = {
-			message: '您没有权限修改他人文章'
+			message: '您没有权限执行该操作'
 		}
 	}
 }
