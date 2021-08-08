@@ -1,9 +1,10 @@
 const errorType = require('../constants/error-types')
 const userService = require('../service/user')
 const md5Password = require('../utils/md5-password')
-const { queryMomentWithUserId } = require('../service/moment')
+const { queryRecord } = require('../service/auth')
 
-exports.verifyUser = async (ctx, next) => {
+// 登录校验
+exports.verifyUserExist = async (ctx, next) => {
 	let { account, password } = ctx.request.body
 
 	// 校验必填
@@ -37,12 +38,18 @@ exports.verifyUser = async (ctx, next) => {
 	await next()
 }
 
+// 验证操作权限
 exports.verifyAuth = async (ctx, next) => {
-	const { id: momentId } = ctx.request.params || ctx.request.body
+	const [resourceKey] = Object.keys(ctx.request.params)
+
+	const resourceId = ctx.request.params[resourceKey]
+
+	tableName = resourceKey.replace('Id', '')
+
 	const { id: userId } = ctx.user
 
 	// 验证是否有当前内容
-	const result = await queryMomentWithUserId(momentId, userId, ctx)
+	const result = await queryRecord(tableName, resourceId, userId, ctx)
 
 	if (!result.length) {
 		const error = new Error(errorType.NO_AUTH_TO_UPDATE_MOMENT.message)

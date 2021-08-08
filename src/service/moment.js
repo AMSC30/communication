@@ -1,5 +1,3 @@
-const connection = require('../app/database')
-
 class Moment {
 	async create(content, id, ctx) {
 		const statement = `INSERT INTO moment (content, user_id) VALUES (?, ?);`
@@ -14,15 +12,6 @@ class Moment {
 							WHERE m.id = ? 
 						`
 		const [result] = await ctx.connection.execute(statement, [id])
-		return result
-	}
-	async queryMomentWithUserId(mId, uId, ctx) {
-		const statement = `
-							SELECT *
-							from moment 
-							WHERE moment.id = ? AND moment.user_id = ?
-						`
-		const [result] = await ctx.connection.execute(statement, [mId, uId])
 		return result
 	}
 

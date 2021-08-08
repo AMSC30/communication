@@ -14,8 +14,8 @@ router.get('/:id', queryMoment)
 
 router.get('/list', queryList)
 
-router.post('/delete/:id', verifyAuth, deleteMoment)
+router.post('/delete/:momentId', verifyAuth, deleteMoment)
 
-router.post('/update/:id', verifyAuth, updateMoment)
+router.post('/update/:momentId', verifyAuth, updateMoment)
 
 module.exports = router
