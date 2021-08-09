@@ -1,14 +1,18 @@
 const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
+const serve = require('koa-static')
 
 const registryRouter = require('../router/index')
 const errorHandler = require('../app/error-handler')
 const isLogin = require('../middleware/is-login')
 const database = require('../middleware/database')
 const errorCatcher = require('../middleware/error-catcher')
+
 const app = new Koa()
 
 app.use(bodyParser())
+
+app.use(serve(__dirname, '../../uploads'))
 
 app.use(isLogin)
 

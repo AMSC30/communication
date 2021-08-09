@@ -3,7 +3,7 @@ const config = require('../app/config')
 const errorTypes = require('../constants/error-types')
 
 module.exports = async (ctx, next) => {
-	const noAuthPath = ['/user/login']
+	const noAuthPath = ['/user/login', '/']
 
 	if (noAuthPath.includes(ctx.url)) {
 		await next()

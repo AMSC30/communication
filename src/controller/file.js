@@ -1,7 +1,7 @@
 const { saveFileInfo, getFileInfoByName } = require('../service/file')
 const fs = require('fs')
-const config = require('../app/config')
 const path = require('path')
+const { updateAvatar } = require('../service/user')
 
 class File {
 	async uploadSingleFile(ctx, next) {
@@ -9,6 +9,10 @@ class File {
 		const { id: userId } = ctx.user
 
 		const result = await saveFileInfo(originalname, mimetype, filename, size, userId, ctx)
+
+		// 更新头像
+		const url = `${process.env.APP_HOST}:${process.env.APP_PORT}/file/${filename}`
+		await updateAvatar(url, ctx.user.id, ctx)
 
 		ctx.body = { result, message: '上传成功' }
 

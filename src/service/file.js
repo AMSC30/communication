@@ -13,6 +13,14 @@ class File {
 		const [result] = await ctx.connection.execute(statement, [name])
 		return result
 	}
+
+	async getFileInfoByUserId(id, ctx) {
+		const statement = `
+                            SELECT * FROM file WHERE user_id = ?
+                        `
+		const [result] = await ctx.connection.execute(statement, [id])
+		return result
+	}
 }
 
 module.exports = new File()

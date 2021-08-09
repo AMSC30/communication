@@ -21,5 +21,13 @@ class USER {
 		const result = await ctx.connection.execute(statement, [id])
 		return result[0]
 	}
+
+	async updateAvatar(avatar, id, ctx) {
+		const statement = `
+							UPDATE user SET avatar = ? WHERE id = ?
+						`
+		const result = await ctx.connection.execute(statement, [avatar, id])
+		return result[0]
+	}
 }
 module.exports = new USER()

@@ -15,5 +15,5 @@ module.exports = {
 	//token加密方式
 	tokenAlgorithm: 'RS256',
 	// 文件上传保存路径
-	fileCachePath: 'upload/'
+	fileCachePath: 'uploads/'
 }
