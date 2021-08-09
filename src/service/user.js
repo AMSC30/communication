@@ -1,26 +1,32 @@
-const connection = require('../app/database')
-
 class USER {
-	async isExist(account) {
+	async isExist(account, ctx) {
 		const statement = `SELECT * FROM user WHERE account = ?`
-		const result = await connection.execute(statement, [account])
-		return result[0]
+		const [result] = await ctx.connection.execute(statement, [account])
+		return result
 	}
 
-	async login(account, password) {
+	async login(account, password, ctx) {
 		const statement = `SELECT * FROM user WHERE account = ? AND password = ?`
-		const result = await connection.execute(statement, [account, password])
+		const result = await ctx.connection.execute(statement, [account, password])
 		return result[0]
 	}
 
-	async addUser(account, password, name, age) {
+	async addUser(account, password, name, age, ctx) {
 		const statement = `INSERT INTO user (account,password,name,age) VALUES (?,?,?,?)`
-		await connection.execute(statement, [account, password, name, age])
+		await ctx.connection.execute(statement, [account, password, name, age])
 	}
 
-	async getUserInfo(id) {
+	async getUserInfo(id, ctx) {
 		const statement = `SELECT * FROM user WHERE id = ${id}`
-		const result = await connection.execute(statement, [id])
+		const result = await ctx.connection.execute(statement, [id])
+		return result[0]
+	}
+
+	async updateAvatar(avatar, id, ctx) {
+		const statement = `
+							UPDATE user SET avatar = ? WHERE id = ?
+						`
+		const result = await ctx.connection.execute(statement, [avatar, id])
 		return result[0]
 	}
 }
