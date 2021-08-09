@@ -11,7 +11,9 @@ module.exports = {
 	// 公钥
 	publicKey: getKey('../constants/public.key'),
 	// token过期时间
-	tokenExpiresTime: '1h',
+	tokenExpiresTime: '24h',
 	//token加密方式
-	tokenAlgorithm: 'RS256'
+	tokenAlgorithm: 'RS256',
+	// 文件上传保存路径
+	fileCachePath: 'upload/'
 }
