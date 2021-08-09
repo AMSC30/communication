@@ -10,8 +10,15 @@ class Label {
 		let statement = `
                             SELECT * FROM label ${name ? 'WHERE name = ?' : ''} 
                         `
-		console.log(statement)
 		const [result] = await ctx.connection.execute(statement, name ? [name] : [])
+		return result
+	}
+
+	async getByMomentAndLabel(momentId, labelId, ctx) {
+		const statement = `
+							SELECT * FROM moment_label WHERE moment_id = ? AND label_id = ?
+						`
+		const [result] = await ctx.connection.execute(statement, [momentId, labelId])
 		return result
 	}
 }

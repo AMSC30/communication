@@ -1,4 +1,5 @@
-const { getLabel } = require('../service/label')
+const { DUPLICATE } = require('../constants/error-types')
+const { getLabel, getByMomentAndLabel } = require('../service/label')
 const { create, query, queryList, deleteSingle, updateMoment, addLabels: addLabelsService } = require('../service/moment')
 
 exports.createMoment = async (ctx, next) => {
@@ -52,6 +53,15 @@ exports.addLabels = async (ctx, next) => {
 	for (let label of labels) {
 		// 获取labelId
 		const [{ id: labelId }] = await getLabel(label, ctx)
+
+		// 查询是否已将添加过
+		const result = await getByMomentAndLabel(momentId, labelId, ctx)
+
+		if (result.length) {
+			const error = new Error(DUPLICATE.message)
+			ctx.app.emit('error', error, ctx)
+			return
+		}
 
 		// 插入到表中
 		await addLabelsService(labelId, momentId, ctx)
